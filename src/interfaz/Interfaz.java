@@ -1,23 +1,28 @@
 package interfaz;
+
 import dominio.*;
 
 import java.io.File;
 import java.util.Scanner;
 
 public class Interfaz {
-    private Libreta libreta;
+    private Catalogo catalogo;
     private static final Scanner teclado = new Scanner(System.in);
+
+
+    //Constructores
     public Interfaz() {}
 
 
     //Métodos de Interfaz
     public void ejecutar() {
-        System.out.println("¡Bienvenido/a! ¿En qué libreta quieres trabajar?");
-        String nombreLibreta = teclado.nextLine();
+        System.out.println("¡Bienvenido/a al catálogo de zapatillas! " +
+                "¿Cómo se llama el catálogo donde quieres trabajar?");
+        String nombreCatalogo = teclado.nextLine();
 
-        File file = new File(nombreLibreta+".ser");
-        if (file.exists()) libreta = Libreta.leer(nombreLibreta);
-        else libreta = new Libreta(nombreLibreta);
+        File file = new File(nombreCatalogo+".cat");
+        if (file.exists()) catalogo = Catalogo.leer(nombreCatalogo);
+        else catalogo = new Catalogo(nombreCatalogo);
         System.out.println();
 
         String peticion;
@@ -26,14 +31,13 @@ public class Interfaz {
         } while (procesandoPeticion(peticion));
     }
     private String listaOpciones() {
-        StringBuilder sb = new StringBuilder("Lista de opciones de "+libreta.getNombre()+"\n");
-        sb.append("\t1. añadir <nombre> <apellido(opcional)> <teléfono>: Añade un contacto a la libreta.\n")
-                .append("\t2. cambiarNombre <nuevo nombre>: Cambia el nombre de la libreta.\n")
-                .append("\t3. lista: Muestra la lista de contactos.\n")
-                .append("\t4. grabar: Guarda la libreta de contactos.\n")
-                .append("\t5. cambiarLibreta <nombre de la libreta>: Cambia la libreta sobre la que se trabaja.\n")
+        StringBuilder sb = new StringBuilder("Lista de opciones de "+catalogo.getNombre()+"\n");
+        sb.append("\t1. añadir <marca> <modelo(opcional)> <color(solo si tiene modelo; opcional)> <talla> <precio(decimal con .)>:" +
+                        "Añade una zapatilla al catálogo.\n")
+                .append("\t3. lista: Muestra la lista de zapatillas.\n")
+                .append("\t4. grabar: Guarda el catálogo.\n")
                 .append("\t6. salir: Sale del programa.\n")
-                .append("\tPor favor, introduzca las instrucciones sin espacios adicionales.\n");
+                .append("\tPor favor, introduzca cada dato sin espacios adicionales.\n");
         return sb.toString();
     }
     private String leerPeticion() {
@@ -44,10 +48,14 @@ public class Interfaz {
     private boolean procesandoPeticion(String entrada) {
         String[] peticion = entrada.split("\\s+");
         if (peticion[0].equalsIgnoreCase("añadir")) return add(peticion);
-        else if (peticion[0].equalsIgnoreCase("cambiarNombre")) return cambiarNombre(peticion);
-        else if (peticion[0].equalsIgnoreCase("lista")) return lista();
-        else if (peticion[0].equalsIgnoreCase("grabar")) return grabar();
-        else if (peticion[0].equalsIgnoreCase("cambiarLibreta")) return cambiarLibreta(peticion);
+        else if (peticion[0].equalsIgnoreCase("lista")) {
+            System.out.println(catalogo+"\n");
+            return true;
+        }
+        else if (peticion[0].equalsIgnoreCase("grabar")) {
+            catalogo.grabar();
+            return true;
+        }
         else if (peticion[0].equalsIgnoreCase("salir")) {
             System.out.println("Saliendo del programa.");
             return false;
@@ -58,21 +66,20 @@ public class Interfaz {
             return true;
         }
     }
-
-
-    //Peticiones
     private boolean add(String[] peticion) {
         try {
-            if (peticion.length <= 3) { //Contacto sin apellido
-                libreta.add(new Contacto(peticion[1], peticion[2]));
+            /* if (peticion.length <= 4) { //Zapatilla básica
+                double precio = Double.parseDouble(peticion[4]);
+                catalogo.add(new Zapatilla(peticion[1], peticion[2], peticion[3], precio));
                 System.out.println();
                 return true;
             }
-            else { //Contacto con apellido
-                libreta.add(new Contacto(peticion[1],peticion[2],peticion[3]));
-                System.out.println();
-                return true;
-            }
+            else if () {} //Zapatilla con modelo
+            else {} //Zapatilla con color */
+            double precio = Double.parseDouble(peticion[4]);
+            catalogo.add(new Zapatilla(peticion[1], peticion[2], peticion[3], precio));
+            System.out.println();
+            return true;
         } catch(ArrayIndexOutOfBoundsException e) {
                 /* Dará este error cuando el usuario haya introducido menos o más datos de los necesarios,
                 pues "peticion[]" será más o menos corta que lo que la creación del contacto requiere. */
@@ -80,34 +87,6 @@ public class Interfaz {
             System.out.println();
             return true;
         }
-    }
-    private boolean cambiarNombre(String[] peticion) {
-        if (confirmacion("¿Quieres cambiar el nombre de "+libreta.getNombre()+
-                " a "+peticion[1]+"?")) {
-            libreta.setNombre(peticion[1]);
-        }
-        System.out.println();
-        return true;
-    }
-    private boolean lista() {
-        System.out.println(libreta+"\n");
-        return true;
-    }
-    private boolean grabar() {
-        libreta.grabar();
-        System.out.println();
-        return true;
-    }
-    private boolean cambiarLibreta (String[] peticion) {
-        if (confirmacion("¿Quieres guardar los cambios?")) {
-            libreta.grabar();
-            libreta = Libreta.leer(peticion[1]);
-        }
-        else {
-            libreta = Libreta.leer(peticion[1]);
-        }
-        System.out.println();
-        return true;
     }
 
 
