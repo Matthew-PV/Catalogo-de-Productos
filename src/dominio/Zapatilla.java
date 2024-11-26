@@ -1,9 +1,8 @@
 package dominio;
-
 import java.io.Serializable;
 import java.text.DecimalFormat;
 
-public class Zapatilla implements Serializable {
+public class Zapatilla extends Producto implements Serializable {
     private String marca, modelo, color, talla;
     private double precio;
     private final DecimalFormat euros = new DecimalFormat("#.##");

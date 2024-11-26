@@ -1,10 +1,7 @@
 package dominio;
-
 import interfaz.Interfaz;
-
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Catalogo implements Serializable {
     private String nombre;
@@ -14,6 +11,7 @@ public class Catalogo implements Serializable {
 
     //Constructores
     public Catalogo() {
+        nombre = "";
         zapatillas = new ArrayList<>();
     }
 

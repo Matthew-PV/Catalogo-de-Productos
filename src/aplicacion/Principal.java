@@ -1,5 +1,4 @@
 package aplicacion;
-
 import interfaz.Interfaz;
 
 public class Principal {
