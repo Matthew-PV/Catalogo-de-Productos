@@ -6,10 +6,10 @@ public class Control {
     private final Scanner teclado = new Scanner(System.in);
 
 
-    //Métodos de Interfaz
+    //Métodos de Interfaz:
 
 
-    //Métodos de Control
+    //Métodos de Control:
     public boolean confirmacion(String pregunta) {
         String respuesta;
         do {

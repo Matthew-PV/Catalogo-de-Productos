@@ -4,16 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/*
 /**
  * Uso:
  * <li>String texto = Ansi.Red.and(Ansi.BgYellow).format("Hola %s", nombre)</li>
  * <li>String texto = Ansi.Blink.colorize("BOOM!")</li>
  *
  * También se pueden usar las constantes en el constructor, sin concatenar:
- * <li>String texto = new Ansi(Ansi.ITALIC, Ansi.GREEN).format("Green money")</li>
+ * <li>String texto = new Ansi(Ansi.ITALIC, Ansi.GREEN).format("Verde dinero")</li>
  * O simplemente usar las constantes en texto:
- * <li>String texto = Ansi.BLUE + "scientific"</li>
+ * <li>String texto = Ansi.BLUE + "científico"</li>
  *
  * NOTA: Se pueden combinar varios colores, pero solo aparecerá el último.
  *
@@ -62,7 +61,7 @@ public final class Ansi {
     public static final String	BACKGROUND_WHITE	= "\u001B[47m";
 
 
-    //Constructores
+    //Constructores:
     public Ansi(String... codigos) { //Crea un objeto que admite una cantidad variable de parámetros
         this.codigos = codigos;
         StringBuilder stringCodigos = new StringBuilder();
@@ -77,7 +76,7 @@ public final class Ansi {
         Collections.addAll(combinacion, otro.codigos);
         return new Ansi(combinacion.toArray(new String[] {}));
     }
-    //Objetos constantes
+    //Objetos constantes:
     public static final Ansi HighIntensity = new Ansi(HIGH_INTENSITY);
     public static final Ansi Bold = HighIntensity;
     public static final Ansi LowIntensity = new Ansi(LOW_INTENSITY);
@@ -107,8 +106,8 @@ public final class Ansi {
     public static final Ansi BgWhite = new Ansi(BACKGROUND_WHITE);
 
 
-    //Métodos para formatear texto
+    //Métodos para formatear texto:
     public String colorize(String texto) {return stringCodigos + texto + RESET;}
-    //Método redefinido de "String.format()", es colorear pero permitiendo formateo de Strings ("Hola %s", nombre).
+    //Método redefinido de "String.format()", es colorear pero permitiendo formateo de Strings ("Hola %s", nombre):
     public String format(String texto, Object... args) {return colorize(String.format(texto, args));}
 }
