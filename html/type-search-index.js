@@ -1,1 +1,0 @@
-typeSearchIndex = [{"l":"All Classes","url":"allclasses-index.html"},{"p":"dominio","l":"Ansi"},{"p":"dominio","l":"Categoria"},{"p":"dominio","l":"ComidaPreparada"},{"p":"control","l":"Control"},{"p":"dominio","l":"Instrumento"},{"p":"interfaz","l":"Interfaz"},{"p":"aplicacion","l":"Principal"},{"p":"dominio","l":"Producto"},{"p":"dominio","l":"Zapatillas"}]

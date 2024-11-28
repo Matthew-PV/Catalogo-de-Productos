@@ -13,7 +13,6 @@ public abstract class Producto {
 
 
     //Constructores:
-    public Producto() {nombre = "";}
     public Producto(String nombre, double precio) {
         this.nombre = nombre;
         this.precio = precio;
@@ -21,7 +20,13 @@ public abstract class Producto {
 
 
     //Getters y Setters:
-    public String getId() {return id;}
+    public String getId() {
+        return id;
+    }
+    public Producto setID(String id) {
+        this.id = id;
+        return this;
+    }
     public String getNombre() {return nombre;}
     public Producto setNombre(String nombre) {
         this.nombre = nombre;
@@ -35,14 +40,20 @@ public abstract class Producto {
 
 
     //Métodos de Producto:
-    public String toString() {
-        return new StringBuilder().append(id).append(' ').append(nombre).toString().trim();
+    public String generarID() {
+        return "producto-N/A";
     }
+    public String generarID(String abreviaturaCategoria) {
+        return "producto-"+abreviaturaCategoria;
+    }
+
+    public String toString() {return nombre+" ("+id+")";}
     public boolean equals(Object otro) {
-        if (otro != null && otro.getClass() == this.getClass()) {
+        if (otro != null && otro.getClass() == this.getClass() && id != null) { //Si el objeto es de la misma clase...
             Producto producto = (Producto) otro;
             return id.equalsIgnoreCase(producto.id);
         }
+        else if (id == null) return false;
         return false;
     }
 }

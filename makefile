@@ -28,4 +28,7 @@ runjar: jar
 	@echo "Main-Class:" $(MAIN_CLASS) >> manifest.txt
 	@echo "Class-Path: . ">> manifest.txt
 	@echo "" >> manifest.txt	
-	java -jar $(JAR_FILE) 
+	java -jar $(JAR_FILE)
+terminar: jar
+	find . -type f -name "*.java" | xargs javadoc -d $(DOC_DIR) -encoding utf-8 -docencoding utf-8 -charset utf-8
+	@echo "Javadoc y Jar generados exitosamente."
