@@ -7,7 +7,7 @@ public class ManejadorCategorias {
     private static final ManejadorCategorias instancia = new ManejadorCategorias();
 
 
-    //Constructor de la instancia única:
+    //Constructor de la instancia única donde puedo agregar las clases que serán fijas para el programa:
     public ManejadorCategorias() {
         categoriasPredefinidas = List.of(
                 new Categoria("Moda", "MD"),

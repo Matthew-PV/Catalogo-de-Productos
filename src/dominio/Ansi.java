@@ -14,7 +14,7 @@ import java.util.List;
  * O simplemente usar las constantes en texto:
  * <li>String texto = Ansi.BLUE + "científico"</li>
  *
- * NOTA: Se pueden combinar varios colores, pero solo aparecerá el último.
+ * NOTA: Se pueden concatenar varios colores, pero solo aparecerá el último.
  *
  * @author <a href="https://gist.github.com/dainkaplan">...</a>
  *
@@ -76,25 +76,115 @@ public final class Ansi {
         Collections.addAll(combinacion, otro.codigos);
         return new Ansi(combinacion.toArray(new String[] {}));
     }
+
+
     //Objetos constantes:
     public static final Ansi HighIntensity = new Ansi(HIGH_INTENSITY);
     public static final Ansi Bold = HighIntensity;
+
+    /**
+     * Escribe texto en negrita.
+     * @param text String a formatear.
+     * @return String escrito en negrita.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Bold(String text) {return Bold.colorize(text);}
     public static final Ansi LowIntensity = new Ansi(LOW_INTENSITY);
     public static final Ansi Normal = LowIntensity;
-
     public static final Ansi Italic = new Ansi(ITALIC);
-    public static final Ansi Underline = new Ansi(UNDERLINE);
+
+    /**
+     * Escribe texto en cursiva.
+     * @param text String a formatear.
+     * @return String escrito en cursiva.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Italic(String text) {return Italic.colorize(text);}
     public static final Ansi Blink = new Ansi(BLINK);
     public static final Ansi RapidBlink = new Ansi(RAPID_BLINK);
+    public static final Ansi Underline = new Ansi(UNDERLINE);
+
+    /**
+     * Escribe texto subrayado.
+     * @param text String a formatear.
+     * @return String subrayado.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Underline(String text) {return Underline.colorize(text);}
 
     public static final Ansi Black = new Ansi(BLACK);
+
+    /**
+     * Escribe texto de color negro.
+     * @param text String a formatear.
+     * @return String coloreada.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Black(String text) {return Black.colorize(text);}
     public static final Ansi Red = new Ansi(RED);
+
+    /**
+     * Escribe texto de color rojo.
+     * @param text String a formatear.
+     * @return String coloreada.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Red(String text) {return Red.colorize(text);}
     public static final Ansi Green = new Ansi(GREEN);
+
+    /**
+     * Escribe texto de color verde.
+     * @param text String a formatear.
+     * @return String coloreada.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Green(String text) {return Green.colorize(text);}
     public static final Ansi Yellow = new Ansi(YELLOW);
+
+    /**
+     * Escribe texto de color amarillo.
+     * @param text String a formatear.
+     * @return String coloreada.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Yellow(String text) {return Yellow.colorize(text);}
     public static final Ansi Blue = new Ansi(BLUE);
+
+    /**
+     * Escribe texto de color azul.
+     * @param text String a formatear.
+     * @return String coloreada.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Blue(String text) {return Blue.colorize(text);}
     public static final Ansi Magenta = new Ansi(MAGENTA);
+
+    /**
+     * Escribe texto de color magenta.
+     * @param text String a formatear.
+     * @return String coloreada.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Magenta(String text) {return Magenta.colorize(text);}
     public static final Ansi Cyan = new Ansi(CYAN);
+
+    /**
+     * Escribe texto de color cian.
+     * @param text String a formatear.
+     * @return String coloreada.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String Cyan(String text) {return Cyan.colorize(text);}
     public static final Ansi White = new Ansi(WHITE);
+
+    /**
+     * Escribe texto de color blanco.
+     * @param text String a formatear.
+     * @return String coloreada.
+     * @author Matthew Puente-Villegas Michavila.
+     */
+    public static String White(String text) {return White.colorize(text);}
+
 
     public static final Ansi BgBlack = new Ansi(BACKGROUND_BLACK);
     public static final Ansi BgRed = new Ansi(BACKGROUND_RED);
