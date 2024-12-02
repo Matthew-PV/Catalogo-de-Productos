@@ -1,6 +1,6 @@
 package dominio.productos;
 
-import control.Util;
+import control.Control;
 import dominio.Ansi;
 import java.io.Serializable;
 
@@ -28,26 +28,26 @@ public class Zapatillas extends Producto implements Serializable {
 
 
     //Métodos de Zapatilla:
-    public boolean modificarZapatilla(String[] modificacion) throws ArrayIndexOutOfBoundsException {
+    public boolean modificar(String[] modificacion) throws ArrayIndexOutOfBoundsException {
         boolean res = true;
         String atributo = modificacion[0].toLowerCase();
         String valor = modificacion[1];
 
         switch (atributo) { //Todos los posibles atributos a modificar...
             case "nombre", "modelo":
-                if (Util.confirmacion("¿Estás seguro de que quieres cambiar el modelo de "+
+                if (Control.confirmacion("¿Estás seguro de que quieres cambiar el modelo de "+
                         Ansi.Italic(Ansi.Blue(nombre))+" a "+Ansi.Italic(Ansi.Yellow(valor))+"?")) {
                     nombre = valor;
             }
                 break;
             case "marca":
-                if (Util.confirmacion("¿Estás seguro de que quieres cambiar la marca de "+
+                if (Control.confirmacion("¿Estás seguro de que quieres cambiar la marca de "+
                         Ansi.Italic(Ansi.Blue(marca))+" a "+Ansi.Italic(Ansi.Yellow(valor))+"?")) {
                     marca = valor;
                 }
                 break;
             case "precio":
-                if (Util.confirmacion("¿Estás seguro de que quieres cambiar el precio de "+
+                if (Control.confirmacion("¿Estás seguro de que quieres cambiar el precio de "+
                         Ansi.Italic(Ansi.Blue(precioEnEuros))+" a "+Ansi.Italic(Ansi.Yellow(valor))+"?")) {
                     try {
                         setPrecio(Double.parseDouble(valor));

@@ -51,10 +51,14 @@ public class Categoria implements Serializable {
         productos.add(producto);
         return this;
     }
+    public boolean modificarProducto(Producto producto, String[] modificacion) throws ProductoNoEncontrado, ArrayIndexOutOfBoundsException {
+        if (!contains(producto)) throw new ProductoNoEncontrado(producto);
+        else return producto.modificar(modificacion);
+    }
 
     public Producto getProducto(Producto producto) throws ProductoNoEncontrado {
         if (!contains(producto)) throw new ProductoNoEncontrado(producto);
-        else return producto;
+        else return productos.get(productos.indexOf(producto));
     }
     public Producto getProducto(String id) throws ProductoNoEncontrado {
         for (Producto producto : productos) {
@@ -81,11 +85,13 @@ public class Categoria implements Serializable {
 
     //Métodos de Categoria:
     public String toString() {
-        StringBuilder sb = new StringBuilder(nombre.toUpperCase());
+        StringBuilder sb = new StringBuilder(Ansi.Cyan(nombre.toUpperCase()));
         if (productos.isEmpty()) return "La categoría de "+nombre+" está vacía.";
         else {
+            int index = 1;
             for (Producto producto : productos) {
-                sb.append("\n\t").append(producto);
+                sb.append("\n\t").append(index).append(' ').append(producto);
+                index++;
             }
             sb.append('\n');
         }

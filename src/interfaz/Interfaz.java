@@ -1,16 +1,17 @@
 package interfaz;
 
-import control.Util;
+import control.Control;
 import dominio.Ansi;
 import dominio.Catalogo;
-import java.util.ArrayList;
+import jdk.jshell.execution.Util;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class Interfaz {
     private static final Scanner teclado = new Scanner(System.in);
     private Catalogo catalogo;
-    private List<String> opcionesPrincipal;
+    private final List<String> opcionesPrincipal;
 
 
     //Constructor de la Interfaz:
@@ -21,8 +22,17 @@ public class Interfaz {
                 (Ansi.Magenta("lista")+": Muestra la lista de catálogos disponibles."),
                 (Ansi.Magenta("seleccionar")+" "+Ansi.Italic(Ansi.Blue("<catalogo>"))+
                         ": Selecciona un catálogo por su nombre."),
+                (Ansi.Magenta("menú catálogo")+": Accede al menú del catálogo."),
                 (Ansi.Bold(Ansi.Red("salir"))+": Cierra el programa.")
         );
+    }
+
+
+    //Getters y Setters de la Interfaz:
+    public Catalogo getCatalogo() {return catalogo;}
+    public Interfaz setCatalogo(Catalogo catalogo) {
+        this.catalogo = catalogo;
+        return this;
     }
 
 
@@ -32,6 +42,7 @@ public class Interfaz {
         StringBuilder sb = new StringBuilder("MENU PRINCIPAL");
         for (String opcion : opcionesPrincipal) {
             sb.append("\n\t").append(indice).append(' ').append(opcion);
+            indice++;
         }
         sb.append('\n');
         return sb.toString();
@@ -40,8 +51,13 @@ public class Interfaz {
 
     //Métodos de Interfaz:
     public void ejecutar() {
-        System.out.println(Ansi.Bold("====="+Ansi.Underline("¡Bienvenido al gestor de catálogos!")+"====="));
-        System.out.println(menuPrincipal());
+        System.out.println(Ansi.Bold("====="+Ansi.Underline("¡Bienvenido al gestor de catálogos!")+Ansi.Bold("=====")));
+
+        String peticion;
+        do {
+            System.out.println(menuPrincipal());
+            peticion = leerPeticion();
+        } while (peticionPrincipal(peticion));
     }
 
 
@@ -53,8 +69,31 @@ public class Interfaz {
     public boolean peticionPrincipal(String entrada) {
         String[] peticion = entrada.split("\\s+");
         String instruccion = peticion[0];
-        switch (instruccion) {
-            case
+
+        try {
+            switch (instruccion) {
+                case "crear", "c":
+                    Control.guardarCambios(this);
+                    Control.crearCatalogo(this, peticion[1]);
+                    break;
+                case "lista", "ls":
+                    Control.lista();
+                    break;
+                case "seleccionar", "sl":
+                    Control.guardarCambios(this);
+                    Control.seleccionar(this, peticion[1]);
+                    break;
+                case "salir", "x":
+                    Control.guardarCambios(this);
+                    System.out.println(Ansi.Bold("=====" + Ansi.Underline("¡Que tengas un buen día!") + Ansi.Bold("=====")));
+                    return false;
+                default:
+                    System.out.println(Ansi.Red(instruccion) + " es una instrucción incorrecta.");
+                    break;
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println(Ansi.Red(Ansi.Italic("Petición incorrecta."))+" Introduce la información con la cantidad de parámetros indicados.");
         }
+        return true;
     }
 }

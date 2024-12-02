@@ -1,16 +1,92 @@
 package control;
 
 import dominio.Ansi;
+import dominio.Catalogo;
+import interfaz.Interfaz;
+import jdk.jshell.execution.Util;
 
+import javax.swing.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Set;
 
 public class Control {
     private static final Scanner teclado = new Scanner(System.in);
 
 
-    //Métodos de Interfaz:
+    //Métodos de Catálogo:
+    private static boolean catalogoActivo(Interfaz interfaz) {return interfaz.getCatalogo() != null;}
+
+    public static void guardarCambios(Interfaz interfaz) {
+        if (catalogoActivo(interfaz) && //Si la interfaz tiene un catálogo activo en el momento.
+                Control.confirmacion("¿Deseas guardar los cambios del catálogo "+Ansi.Blue(interfaz.getCatalogo().getNombre())+"?")) {
+            interfaz.getCatalogo().guardar();
+        }
+    }
+
+    private static boolean seleccionarCatalogo(Interfaz interfaz, Catalogo catalogo) {
+        if (catalogo.exists()) {
+            if (Control.confirmacion("¿Deseas seleccionar el catálogo "+Ansi.Blue(catalogo.getNombre())+"?"))
+                interfaz.setCatalogo(Catalogo.leer(catalogo.getNombre()));
+            return true;
+        }
+        else {
+            if (confirmacion("El catálogo "+Ansi.Blue(catalogo.getNombre())+" no existe. ¿Deseas crearlo?"))
+                crearCatalogo(interfaz, catalogo.getNombre());
+            return false;
+        }
+    }
+    private static boolean seleccionarCatalogo(Interfaz interfaz, String nombre) {
+        Catalogo catalogo = new Catalogo(nombre);
+        if (catalogo.exists()) {
+            if (Control.confirmacion("¿Deseas seleccionar el catálogo "+Ansi.Blue(catalogo.getNombre())+"?"))
+                interfaz.setCatalogo(Catalogo.leer(nombre));
+            return true;
+        }
+        else {
+            if (confirmacion("El catálogo "+Ansi.Blue(catalogo.getNombre())+" no existe. ¿Deseas crearlo?"))
+                crearCatalogo(interfaz, nombre);
+            return false;
+        }
+    }
+
+
+    //Métodos del menú principal de Interfaz:
+    public static void crearCatalogo(Interfaz interfaz, String nombre) {
+        Catalogo catalogo = new Catalogo(nombre);
+        if (catalogo.exists()) {
+            if (confirmacion("El catálogo "+Ansi.Blue(catalogo.getNombre())+" ya existe. ¿Deseas seleccionarlo?")) {
+                interfaz.setCatalogo(Catalogo.leer(nombre));
+            }
+        }
+        interfaz.setCatalogo(new Catalogo(nombre));
+    }
+    public static void lista() {
+        File directorioActual = new File(".");
+        if (directorioActual.exists() && directorioActual.isDirectory()) {
+            //listFiles() crea una lista de los ficheros, y puede recibir un filtro opcional.
+            File[] catalogos = directorioActual.listFiles(file -> file.isFile() && file.getName().endsWith(Catalogo.getExtension()));
+
+            if (catalogos != null && catalogos.length > 0) {
+                int index = 1;
+                for (File file : catalogos) {
+                    Catalogo catalogo = Catalogo.leer(file);
+                    System.out.println("\t"+index+" "+Ansi.Blue(catalogo.getNombre()));
+                    index++;
+                }
+                System.out.println();
+            }
+            else System.out.println("No existen catálogos actualmente.");
+
+        }
+        else {
+            System.out.println("El directorio actual ("+directorioActual.getName()+") no es un directorio válido.");
+        }
+    }
+    public static void seleccionar(Interfaz interfaz, String nombre) {
+        Catalogo catalogo = new Catalogo(nombre);
+        seleccionarCatalogo(interfaz, catalogo);
+    }
 
 
     //Métodos de Control:

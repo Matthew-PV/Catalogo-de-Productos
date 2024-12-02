@@ -52,6 +52,8 @@ public abstract class Producto implements Serializable {
     public String generarID() {return nombre+"-N/A";}
     public String generarID(String abreviaturaCategoria) {return nombre+"-"+abreviaturaCategoria;}
 
+    public abstract boolean modificar(String[] modificacion);
+
     public String toString() {return nombre+" "+precioEnEuros;}
     public boolean equals(Object otro) {
         if (otro != null && otro.getClass() == this.getClass() && id != null) { //Si el objeto es de la misma clase...
