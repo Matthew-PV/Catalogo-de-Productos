@@ -18,7 +18,9 @@ public class Categoria implements Serializable {
 
 
     //Getters y Setters de Categoría:
-    public String getNombre() {return nombre;}
+    public String getNombre() {
+        return nombre.toUpperCase().charAt(0)+nombre.substring(1);
+    }
     public Categoria setNombre(String nombre) {
         this.nombre = nombre;
         return this;

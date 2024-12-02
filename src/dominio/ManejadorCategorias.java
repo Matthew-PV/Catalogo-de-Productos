@@ -10,9 +10,9 @@ public class ManejadorCategorias {
     //Constructor de la instancia única donde puedo agregar las clases que serán fijas para el programa:
     public ManejadorCategorias() {
         categoriasPredefinidas = List.of(
-                new Categoria("Moda", "MD"),
-                new Categoria("Música", "MS"),
-                new Categoria("Electrónica","E")
+                new Categoria("moda", "MD"),
+                new Categoria("musica", "MS"),
+                new Categoria("electronica","E")
         );
     }
 

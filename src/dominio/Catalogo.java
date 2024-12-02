@@ -55,7 +55,6 @@ public class Catalogo implements Serializable {
             sb.append("\n\t").append(index).append(' ').append(categoria.getNombre());
             index++;
         }
-        sb.append('\n');
         return sb.toString();
     }
 
@@ -108,13 +107,17 @@ public class Catalogo implements Serializable {
     public boolean guardar() {
         try {
             ObjectOutputStream fo = new ObjectOutputStream(new FileOutputStream(nombreArchivo));
-            if (exists())
-                if (Control.confirmacion("El catálogo "+Ansi.Blue(nombre)+" ya existe. ¿Deseas sobreescribirlo?"))
+            if (exists()) {
+                if (Control.confirmacion("El catálogo " + Ansi.Blue(nombre) + " ya existe. ¿Deseas sobreescribirlo?")) {
                     new File(nombreArchivo).delete();
-
-            fo.writeObject(this);
-            fo.close();
-            return true;
+                    fo.writeObject(this);
+                    fo.close();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+            else return true;
         } catch (IOException e) {
             System.out.println(Ansi.Red("Error de guardado."));
             return false;
@@ -130,14 +133,17 @@ public class Catalogo implements Serializable {
     }
     public boolean exists() {
         File file = new File(nombreArchivo);
-        return file.exists();
+        boolean res = file.exists();
+        file.delete();
+        return res;
     }
 
     public String toString() {
-        StringBuilder sb = new StringBuilder(nombre);
+        StringBuilder sb = new StringBuilder(Ansi.Bold(Ansi.Underline(Ansi.Blue(nombre))));
         for (Categoria categoria : categorias.values()) {
-            sb.append("\n\t").append(categoria).append('\n');
+            sb.append("\n\t").append(categoria);
         }
+        sb.append('\n');
         return sb.toString();
     }
 }
